@@ -12,6 +12,8 @@ import technical.test.api.representation.dto.FlightDTO;
 import technical.test.api.services.AirportService;
 import technical.test.api.services.FlightService;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class FlightFacade {
@@ -20,8 +22,10 @@ public class FlightFacade {
     private final FlightMapper flightMapper;
     private final AirportMapper airportMapper;
 
-    public Flux<FlightRepresentation> getAllFlights() {
+    public Flux<FlightRepresentation> getAllFlights(Optional<Long> priceMax, Optional<String> originMandatory) {
         return flightService.getAllFlights()
+                .filter((fr) -> priceMax.isPresent() ? fr.getPrice() <= priceMax.get() : true )
+                .filter((fr) -> originMandatory.isPresent() ?  originMandatory.get().equals(fr.getOrigin()) : true )
                 .flatMap(flightRecord -> airportService.findByIataCode(flightRecord.getOrigin())
                         .zipWith(airportService.findByIataCode(flightRecord.getDestination()))
                         .flatMap(tuple -> {
