@@ -66,6 +66,11 @@
             font-family: sans-serif;
             font-size: 0.8rem;
         }
+
+        .custom-sizing {
+            max-width: 100px;
+            max-height: 70px
+        }
     </style>
 </head>
 <body>
@@ -90,8 +95,17 @@
                 <th th:text="${flight.origin.name}"></th>
                 <th th:text="${flight.destination.name}"></th>
                 <th th:text="${#numbers.formatDecimal(flight.price, 1, 2, 'COMMA')} + ' €'"></th>
-                <!-- Photos are currently broken on my local DB. -->
-<!--                <th th:text="${flight.photo}"></th>-->
+                <!--
+                Lazy loading pour améliorer un peu les performances. Le mieux serai de compresser les images depuis notre backend
+                et eviter de charger des images en 4k pour une miniature en 100px*70px
+                 -->
+                <th>
+                    <img class="custom-sizing"
+                         th:src="${flight.image} + '?w=20%'"
+                         th:alt="'Image representant le vol vers ' + ${flight.destination.name}"
+                         loading="lazy"
+                    ></img>
+                </th>
             </tr>
         </table>
     </ul>
