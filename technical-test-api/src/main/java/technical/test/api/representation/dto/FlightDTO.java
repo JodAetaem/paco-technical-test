@@ -33,7 +33,7 @@ public class FlightDTO {
                 .arrival(arrival)
                 .price(price)
                 .origin(originIata)
-                .destination(originIata)
+                .destination(destinationIata)
                 .image(image)
                 .build();
     }
