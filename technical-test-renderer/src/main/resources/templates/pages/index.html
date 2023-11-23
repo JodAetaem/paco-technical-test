@@ -66,6 +66,11 @@
             font-family: sans-serif;
             font-size: 0.8rem;
         }
+
+        .custom-sizing {
+            max-width: 100px;
+            max-height: 70px
+        }
     </style>
 </head>
 <body>
@@ -77,7 +82,29 @@
     <!-- Contenu de la recherche de vols -->
     <h2>Bienvenue sur notre site de recherche de vols</h2>
     <p>Commencez votre aventure en trouvant les meilleurs vols disponibles.</p>
-    <!-- Ajoutez ici le formulaire de recherche de vols ou d'autres éléments pertinents -->
+    <hr>
+    <h3>Recherche</h3>
+    <form th:action="@{filtrage}" method="get">
+        <label for="minPrice">Prix min:</label>
+        <input type="number" id="minPrice" name="minPrice" min="0">
+        <br>
+
+        <label for="maxPrice">Prix max:</label>
+        <input type="number" id="maxPrice" name="maxPrice" min="0">
+        <br>
+
+        <label for="originIata">Origine:</label>
+        <input type="text" id="originIata" name="originIata">
+        <br>
+
+        <label for="earliestDepartureDate">Date de depart minimum:</label>
+        <input type="datetime-local" id="earliestDepartureDate" name="earliestDepartureDate">
+        <br>
+        <br>
+        <button type="submit">Rechercher</button>
+        <br>
+    </form>
+    <hr>
     <ul>
         <table>
             <tr>
@@ -89,8 +116,18 @@
             <tr th:each="flight : ${flights}">
                 <th th:text="${flight.origin.name}"></th>
                 <th th:text="${flight.destination.name}"></th>
-                <th th:text="${flight.price}"></th>
-                <th th:text="${flight.photo}"></th>
+                <th th:text="${#numbers.formatDecimal(flight.price, 1, 2, 'COMMA')} + ' €'"></th>
+                <!--
+                Lazy loading pour améliorer un peu les performances. Le mieux serai de compresser les images depuis notre backend
+                et eviter de charger des images en 4k pour une miniature en 100px*70px
+                 -->
+                <th>
+                    <img class="custom-sizing"
+                         th:src="${flight.image}"
+                         th:alt="'Image representant le vol vers ' + ${flight.destination.name}"
+                         loading="lazy"
+                    ></img>
+                </th>
             </tr>
         </table>
     </ul>

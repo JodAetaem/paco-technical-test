@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr" layout:decorate="~{decorators/master}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f7fc;
+            color: #333;
+        }
+
+        header {
+            background-color: #3498db;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        section {
+            padding: 40px;
+        }
+
+        footer {
+            background-color: #3498db;
+            padding: 10px 0;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+        }
+
+        caption {
+            padding: 10px;
+            caption-side: bottom;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <h1>Admin</h1>
+</header>
+
+<section>
+    <h2>Centre d'administration</h2>
+    <h3>Ajouter un vol </h3>
+
+    <form th:action="@{admin}" method="post" th:object="${FlightDTO}">
+        <label for="originIata">Departure:</label>
+        <input type="text" id="originIata" name="originIata" required>
+        <br>
+
+        <label for="destinationIata">Destination:</label>
+        <input type="text" id="destinationIata" name="destinationIata" required>
+        <br>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required>
+        <br>
+
+        <label for="departure">Departure Date:</label>
+        <input type="datetime-local" id="departure" name="departure" required>
+        <br>
+
+        <label for="arrival">Return Date:</label>
+        <input type="datetime-local" id="arrival" name="arrival" required>
+        <br>
+
+        <label for="image">Image URL:</label>
+        <input type="text" id="image" name="image" required>
+        <br>
+
+        <button type="submit">Submit</button>
+    </form>
+</section>
+
+<!-- Probablement moyen de faire le footer et le header en layout pour eviter cette répétition -->
+<footer>
+    <p>&copy; 2023 Recherche de Vols. Tous droits réservés.</p>
+</footer>
+</body>
+</html>
