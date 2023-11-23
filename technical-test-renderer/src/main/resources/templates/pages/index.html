@@ -82,7 +82,29 @@
     <!-- Contenu de la recherche de vols -->
     <h2>Bienvenue sur notre site de recherche de vols</h2>
     <p>Commencez votre aventure en trouvant les meilleurs vols disponibles.</p>
-    <!-- Ajoutez ici le formulaire de recherche de vols ou d'autres éléments pertinents -->
+    <hr>
+    <h3>Recherche</h3>
+    <form th:action="@{filtrage}" method="get">
+        <label for="minPrice">Prix min:</label>
+        <input type="number" id="minPrice" name="minPrice" min="0">
+        <br>
+
+        <label for="maxPrice">Prix max:</label>
+        <input type="number" id="maxPrice" name="maxPrice" min="0">
+        <br>
+
+        <label for="originIata">Origine:</label>
+        <input type="text" id="originIata" name="originIata">
+        <br>
+
+        <label for="earliestDepartureDate">Date de depart minimum:</label>
+        <input type="datetime-local" id="earliestDepartureDate" name="earliestDepartureDate">
+        <br>
+        <br>
+        <button type="submit">Rechercher</button>
+        <br>
+    </form>
+    <hr>
     <ul>
         <table>
             <tr>
